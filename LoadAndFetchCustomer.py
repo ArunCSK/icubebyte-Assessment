@@ -47,13 +47,13 @@ def WriteCSVFile(fileData,FilePath):
     fileData.to_csv (FilePath, index = False, header=True)
 
 def IsValidCountryName(Name):
-    print(Name)
+    #print(Name)
     filePath = ExcelPath+Name+".csv"
     if os.path.exists(filePath):
-        print("Country Code "+Name+" exits. Fetching Data...")
+        print("Country Code " + Name + " exits. Fetching Data...")
         return filePath
     else:
-        print("Invalid Country Code.")
+        print("Country Code " + Name + " does not exists.")
         return ""
 
 def LoadCountryData(ExcelFilePath):
@@ -62,5 +62,8 @@ def LoadCountryData(ExcelFilePath):
                             ,delimiter=',')
     
     data = pd.DataFrame(dataset.iloc[: , 0:10])
-    
+    data['Open_Date'] = pd.to_datetime(data['Open_Date'], format='%Y%m%d')
+    data['Last_Consulted_Date'] = pd.to_datetime(data['Last_Consulted_Date'], format='%Y%m%d')
+    data['DOB'] = pd.to_datetime(data['DOB'], format='%m%d%Y')
+
     print(data)
