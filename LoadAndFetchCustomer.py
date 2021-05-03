@@ -31,24 +31,21 @@ def Load():
         fileData = df[df['Country'] == countries]
 
         if os.path.isfile(FilePath):
-            #DataFrame to CSV
+            #If file exists then wirte DataFrame to CSV
             WriteCSVFile(fileData, FilePath)
-            #print(fileData)
         else:
-            #Create csv file and write 
+            #If file does not exits then Create csv file and write 
             open(FilePath, "w")
             WriteCSVFile(fileData, FilePath)
 
         Countries_FileName = ""
         FilePath = ""
-        #print(df.Country.unique)
 
 def WriteCSVFile(fileData,FilePath):
     fileData.to_csv (FilePath, index = False, header=True)
 
 def IsValidCountryName(Name):
-    #print(Name)
-    filePath = ExcelPath+Name+".csv"
+    filePath = ExcelPath + Name + ".csv"
     if os.path.exists(filePath):
         print("Country Code " + Name + " exits. Fetching Data...")
         return filePath
