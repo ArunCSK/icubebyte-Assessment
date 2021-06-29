@@ -3,7 +3,7 @@ import os
 
 #Change this path as per your local directory
 #Example  '{Directory}:\\FolderName\\FolderName\\{ProjectDirectory = incubyte}\\FolderName\\'
-ExcelPath = 'D:\Project\incubyte\icubebyte-Assessment\\CustomerCountryWise\\'
+ExcelPath = 'D:\Arundev\icubebyte-Assessment\CustomerCountryWise'
 
 def Load():
     #Read CSV File
@@ -25,27 +25,30 @@ def Load():
     #Iterate Unique country values and write into files
     for countries in unique_Conturies:
         Countries_FileName = countries+ ".csv"
-        FilePath = ExcelPath + Countries_FileName
+        FilePath = ExcelPath +"\\"+ Countries_FileName
 
         #filter data Country wise
         fileData = df[df['Country'] == countries]
 
         if os.path.isfile(FilePath):
-            #If file exists then wirte DataFrame to CSV
+            #DataFrame to CSV
             WriteCSVFile(fileData, FilePath)
+            #print(fileData)
         else:
-            #If file does not exits then Create csv file and write 
+            #Create csv file and write 
             open(FilePath, "w")
             WriteCSVFile(fileData, FilePath)
 
         Countries_FileName = ""
         FilePath = ""
+        #print(df.Country.unique)
 
 def WriteCSVFile(fileData,FilePath):
     fileData.to_csv (FilePath, index = False, header=True)
 
 def IsValidCountryName(Name):
-    filePath = ExcelPath + Name + ".csv"
+    #print(Name)
+    filePath = ExcelPath +"\\"+ Name +".csv"
     if os.path.exists(filePath):
         print("Country Code " + Name + " exits. Fetching Data...")
         return filePath
